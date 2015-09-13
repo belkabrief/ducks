@@ -1,25 +1,9 @@
 <?php
-	$file = __DIR__ . "/data/products.csv";
-
-	if (!file_exists($file)) {
-		die("We don't have data file");
-	}
-
-	if(($fp = fopen($file, 'r+')) === false) {
-		die("Error while opening file");
-	}
-
-	$products = [];
-
-	$i = 0;
-	while (($data = fgetcsv($fp, 1000, ';')) !== false) {
-		if ($i > 0) {
-			$products[$data[0]] = $data;
-		}
-		$i++;
-	}
+	$src_path = __DIR__ . '/../src/';
 	
-	fclose($fp);
+	include_once $src_path . 'utilities/db.php';
+	
+	$categories = get_categories($connection);
 	
 	//количество элементов на страницу (пагинация)
 	$per_page = 2;
@@ -34,6 +18,10 @@
 		$p = 1;
 	}
 	
+	//$categories = get_categories($connection);
+	//try catch - prepare (вставка товара по заполненным данным POST)
+	//если post пустой, то отображ форму добавления
+	
 	//определяем, какую страницу сайта загрузить
 	if (isset($_GET['page'])){
 		$page = $_GET['page'];
@@ -43,19 +31,19 @@
 	
 	switch ($page){
 		case 'main':
-			include_once "main.php";
+			include_once $src_path . "main.php";
 			break;
 		case 'catalog':
-			include_once "catalog.php";
+			include_once $src_path . "catalog.php";
 			break;
 		case 'single-item':
-			include_once "single-item.php";
+			include_once $src_path . "single-item.php";
 			break;
 		case 'add_foto':
-			include_once "add_foto.php";
+			include_once $src_path . "add_foto.php";
 			break;
 		case 'edit_item':
-			include_once "edit_item.php";
+			include_once $src_path . "edit_item.php";
 			break;
 		default: 
 			echo "<h1>Ooops, 404</h1>";

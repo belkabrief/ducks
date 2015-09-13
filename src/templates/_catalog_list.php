@@ -10,7 +10,7 @@
 		for($i = $first_item; $i < $last_item; $i++) {
 			if (isset($products[$i])){
 				$product = $products[$i];
-				include 'templates/_shop_element.php';
+				include '_shop_element.php';
 			}
 		}
 	}
